@@ -1,0 +1,14 @@
+#gridContainer{
+    display: grid;
+    grid-template-columns: repeat(3,110px);
+    grid-template-rows: repeat(3,110px);
+    column-gap: 0px;
+    row-gap: 0px;
+    position: absolute;
+}
+.square{
+    height: 100px;
+    width: 100px;
+    background-color: white;
+    border: 1px solid black;
+}

@@ -47,27 +47,50 @@ function checkWin(gb){
 }
 
 function endGame(){
-    const submitButton = document.querySelector('#submitButton');
-    const newButton = submitButton.cloneNode(true);
-    submitButton.parentNode.replaceChild(newButton, submitButton);
-
+    const gameSquares = document.querySelectorAll('.square');
+    gameSquares.forEach(square =>{
+        square.textContent = "";
+        const newSquare = square.cloneNode(true);
+        square.parentNode.replaceChild(newSquare,square);
+    });
 }
 
 function createGame(gb,pOne,pTwo){
-    const submitButton = document.querySelector('#submitButton');
-    submitButton.addEventListener('click', ()=>{
-        const pOnepick = document.getElementById('pick').value;
-        if( (-1 < pOnepick && pOnepick < 9) && gb.board[pOnepick] == undefined){
-            if(turn % 2 == 0){
-                gb.board[pOnepick] = 0;
-            } else {
-                gb.board[pOnepick] = 1;
+    const gameSquares = document.querySelectorAll('.square');
+
+    gameSquares.forEach(square =>{
+        square.addEventListener('click', ()=>{
+            const pick = square.dataset.indexNumber;
+            if( (-1 < pick && pick < 9) && gb.board[pick] == undefined){
+                if(turn % 2 == 0){
+                    gb.board[pick] = 0;
+                    square.textContent = "X";
+                } else {
+                    gb.board[pick] = 1;
+                    square.textContent = "O";
+                }
+                turn++;
+                console.log(turn);
+                console.log(gb.board);
+                checkWin(gb);
             }
-            turn++;
-            console.log(gb.board);
-            checkWin(gb);
-        }
-    },);
+        })
+    });
+
+
+    // submitButton.addEventListener('click', ()=>{
+    //     const pOnepick = document.getElementById('pick').value;
+    //     if( (-1 < pOnepick && pOnepick < 9) && gb.board[pOnepick] == undefined){
+    //         if(turn % 2 == 0){
+    //             gb.board[pOnepick] = 0;
+    //         } else {
+    //             gb.board[pOnepick] = 1;
+    //         }
+    //         turn++;
+    //         console.log(gb.board);
+    //         checkWin(gb);
+    //     }
+    // },);
 }
 
 const gb = Gameboard();
