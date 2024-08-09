@@ -7,52 +7,46 @@ function player(name){
     return{name};
 }
 
-function fillBoard(){
-    
-}
-
 function checkWin(gb){
     if(gb.board[0] == gb.board[1] && gb.board[1] == gb.board[2] && gb.board[0] != undefined){
-        console.log('win');
-        endGame();
+        endGame(gb.board[0]);
     }
     if(gb.board[3] == gb.board[4] && gb.board[4] == gb.board[5] && gb.board[3] != undefined){
-        console.log('win');
-        endGame();
+        endGame(gb.board[3]);
     }
     if(gb.board[7] == gb.board[8] && gb.board[8] == gb.board[9] && gb.board[7] != undefined){
-        console.log('win');
-        endGame();
+        endGame(gb.board[7]);
     }
     if(gb.board[0] == gb.board[3] && gb.board[3] == gb.board[6] && gb.board[0] != undefined){
-        console.log('win');
-        endGame();
+        endGame(gb.board[0]);
     }
     if(gb.board[1] == gb.board[4] && gb.board[4] == gb.board[7] && gb.board[1] != undefined){
-        console.log('win');
-        endGame();
+        endGame(gb.board[1]);
     }
     if(gb.board[2] == gb.board[5] && gb.board[5] == gb.board[8] && gb.board[2] != undefined){
-        console.log('win');
-        endGame();
+        endGame(gb.board[2]);
     }
     if(gb.board[0] == gb.board[4] && gb.board[4] == gb.board[8] && gb.board[0] != undefined){
-        console.log('win');
-        endGame();
+        endGame(gb.board[0]);
     }
     if(gb.board[2] == gb.board[4] && gb.board[4] == gb.board[6] && gb.board[2] != undefined){
-        console.log('win');
-        endGame();
+        endGame(gb.board[2]);
     }
 }
 
-function endGame(){
+function endGame(winner){
     const gameSquares = document.querySelectorAll('.square');
     gameSquares.forEach(square =>{
-        square.textContent = "";
         const newSquare = square.cloneNode(true);
         square.parentNode.replaceChild(newSquare,square);
     });
+
+    if(winner == 0){
+        console.log('X wins');
+    } else if(winner == 1) {
+        console.log('O wins');
+    }
+
 }
 
 function createGame(gb,pOne,pTwo){
@@ -70,8 +64,6 @@ function createGame(gb,pOne,pTwo){
                     square.textContent = "O";
                 }
                 turn++;
-                console.log(turn);
-                console.log(gb.board);
                 checkWin(gb);
             }
         })
@@ -96,6 +88,22 @@ function createGame(gb,pOne,pTwo){
 const gb = Gameboard();
 const playerOne = player("p1");
 const playerTwo = player("p2");
+
+
 let turn = 0;
 createGame(gb,playerOne,playerTwo);
+
+const resetButton = document.getElementById('reset');
+resetButton.addEventListener('click', ()=>{
+    const gameSquares = document.querySelectorAll('.square');
+    gameSquares.forEach(square =>{
+        square.textContent = "";
+        const newSquare = square.cloneNode(true);
+        square.parentNode.replaceChild(newSquare,square);
+    });
+    endGame();
+    const gb = Gameboard();
+    turn = 0;
+    createGame(gb,playerOne,playerTwo);
+});
 
